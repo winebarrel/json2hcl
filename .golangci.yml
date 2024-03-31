@@ -1,0 +1,6 @@
+linters:
+  enable:
+    - gofmt
+    - misspell
+run:
+  timeout: 5m
