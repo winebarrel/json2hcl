@@ -5,12 +5,11 @@ go 1.22.1
 require (
 	github.com/hashicorp/hcl/v2 v2.20.1
 	github.com/stretchr/testify v1.9.0
-	github.com/zclconf/go-cty v1.13.0
+	github.com/zclconf/go-cty v1.14.4
 )
 
 require (
 	github.com/agext/levenshtein v1.2.1 // indirect
-	github.com/apparentlymart/go-textseg/v13 v13.0.0 // indirect
 	github.com/apparentlymart/go-textseg/v15 v15.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
