@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,6 +36,49 @@ func TestUnmarshal(t *testing.T) {
 
 		fmt.Printf("%s -> %s\n", j, h)
 		b, err := json2hcl.Unmarshal(jsonStr)
+		require.NoError(err)
+		assert.Equal(string(bytes.TrimSpace(hclStr)), string(b))
+	}
+}
+
+func TestUnmarshalString(t *testing.T) {
+	assert := assert.New(t)
+	require := require.New(t)
+
+	jsons, err := filepath.Glob("./tests/*.json")
+	require.NoError(err)
+
+	for _, j := range jsons {
+		jsonStr, err := os.ReadFile(j)
+		require.NoError(err)
+		h := subExt(t, j, ".hcl")
+		hclStr, err := os.ReadFile(h)
+		require.NoError(err)
+
+		fmt.Printf("%s -> %s\n", j, h)
+		s, err := json2hcl.UnmarshalString(string(jsonStr))
+		require.NoError(err)
+		assert.Equal(strings.TrimSpace(string(hclStr)), s)
+	}
+}
+
+func TestUnmarshalFrom(t *testing.T) {
+	assert := assert.New(t)
+	require := require.New(t)
+
+	jsons, err := filepath.Glob("./tests/*.json")
+	require.NoError(err)
+
+	for _, j := range jsons {
+		f, err := os.Open(j)
+		require.NoError(err)
+		h := subExt(t, j, ".hcl")
+		hclStr, err := os.ReadFile(h)
+		require.NoError(err)
+
+		fmt.Printf("%s -> %s\n", j, h)
+		b, err := json2hcl.UnmarshalFrom(f)
+		f.Close()
 		require.NoError(err)
 		assert.Equal(string(bytes.TrimSpace(hclStr)), string(b))
 	}
