@@ -7,7 +7,7 @@ A tool to convert JSON to HCL.
 ## Installation
 
 ```sh
-go get github.com/winebarrel/cronplan
+brew install winebarrel/json2hcl/json2hcl
 ```
 
 ## Usage
