@@ -18,7 +18,7 @@ Usage: json2hcl [OPTION] [FILE]
     	print version and exit
 ```
 
-```
+```sh
 $ cat policy.json
 {
     "Version": "2012-10-17",
@@ -35,7 +35,7 @@ $ cat policy.json
     ]
 }
 
-$ json2hcl policy.json
+$ json2hcl policy.json # or `cat policy.json | json2hcl`
 {
   Statement = [{
     Action = "service-prefix:action-name"
