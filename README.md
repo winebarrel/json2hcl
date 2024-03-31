@@ -1,5 +1,7 @@
 # json2hcl
 
+[![CI](https://github.com/winebarrel/json2hcl/actions/workflows/ci.yml/badge.svg)](https://github.com/winebarrel/json2hcl/actions/workflows/ci.yml)
+
 A tool to convert JSON to HCL.
 
 ### Usage
