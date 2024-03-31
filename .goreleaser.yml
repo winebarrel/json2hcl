@@ -1,0 +1,24 @@
+before:
+  hooks:
+    - go mod tidy
+builds:
+  - main: ./cmd/json2hcl
+    ldflags:
+      - -X main.version={{.Version}}
+    env:
+      - CGO_ENABLED=0
+checksum:
+  name_template: "checksums.txt"
+archives:
+  - format_overrides:
+      - goos: windows
+        format: zip
+brews:
+  - repository:
+      owner: winebarrel
+      name: homebrew-json2hcl
+    homepage: https://github.com/winebarrel/json2hcl
+    description: A tool to convert JSON to HCL.
+    license: MIT
+    install: |
+      bin.install 'json2hcl'
