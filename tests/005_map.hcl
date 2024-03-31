@@ -1,0 +1,9 @@
+{
+  foo = {
+    bar = "zoo"
+    baz = 100
+  }
+  hoge = {
+    "fu:ga" = true
+  }
+}
