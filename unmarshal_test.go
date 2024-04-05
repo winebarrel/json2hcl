@@ -2,7 +2,6 @@ package json2hcl_test
 
 import (
 	"bytes"
-	"fmt"
 	"os"
 	"path"
 	"path/filepath"
@@ -34,7 +33,7 @@ func TestUnmarshal(t *testing.T) {
 		hclStr, err := os.ReadFile(h)
 		require.NoError(err)
 
-		fmt.Printf("%s -> %s\n", j, h)
+		t.Logf("%s -> %s\n", j, h)
 		b, err := json2hcl.Unmarshal(jsonStr)
 		require.NoError(err)
 		assert.Equal(string(bytes.TrimSpace(hclStr)), string(b))
@@ -55,7 +54,7 @@ func TestUnmarshalString(t *testing.T) {
 		hclStr, err := os.ReadFile(h)
 		require.NoError(err)
 
-		fmt.Printf("%s -> %s\n", j, h)
+		t.Logf("%s -> %s\n", j, h)
 		s, err := json2hcl.UnmarshalString(string(jsonStr))
 		require.NoError(err)
 		assert.Equal(strings.TrimSpace(string(hclStr)), s)
@@ -76,7 +75,7 @@ func TestUnmarshalFrom(t *testing.T) {
 		hclStr, err := os.ReadFile(h)
 		require.NoError(err)
 
-		fmt.Printf("%s -> %s\n", j, h)
+		t.Logf("%s -> %s\n", j, h)
 		b, err := json2hcl.UnmarshalFrom(f)
 		f.Close()
 		require.NoError(err)
