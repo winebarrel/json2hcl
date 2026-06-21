@@ -15,7 +15,6 @@ jobs:
       - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
-          cache: false # https://github.com/golangci/golangci-lint-action/issues/807
       - uses: golangci/golangci-lint-action@v9
       - run: make vet
       - run: make cover
