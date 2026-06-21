@@ -14,12 +14,10 @@ archives:
   - format_overrides:
       - goos: windows
         formats: [zip]
-brews:
+homebrew_casks:
   - repository:
       owner: winebarrel
       name: homebrew-json2hcl
     homepage: https://github.com/winebarrel/json2hcl
     description: A tool to convert JSON to HCL.
     license: MIT
-    install: |
-      bin.install 'json2hcl'
