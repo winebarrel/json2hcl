@@ -14,8 +14,9 @@ brew install winebarrel/json2hcl/json2hcl
 
 ## Usage
 
-```go
+```
 Usage: json2hcl [OPTION] [FILE]
+  -n	do not escape ${...} and %{...} template sequences
   -version
     	print version and exit
 ```

@@ -31,7 +31,13 @@ func main() {
 		r = bufio.NewReader(f)
 	}
 
-	b, err := json2hcl.UnmarshalFrom(r)
+	var opts []json2hcl.Option
+
+	if flags.noEscape {
+		opts = append(opts, json2hcl.NoEscape())
+	}
+
+	b, err := json2hcl.UnmarshalFrom(r, opts...)
 
 	if err != nil {
 		log.Fatalf("failed to unmarshal JSON: %s", err)

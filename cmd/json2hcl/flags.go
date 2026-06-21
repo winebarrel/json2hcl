@@ -12,7 +12,8 @@ var (
 )
 
 type flags struct {
-	file string
+	file     string
+	noEscape bool
 }
 
 func init() {
@@ -29,11 +30,14 @@ func init() {
 func parseFlags() *flags {
 	flags := &flags{}
 	showVersion := flag.Bool("version", false, "print version and exit")
+	noEscape := flag.Bool("n", false, "do not escape ${...} and %{...} template sequences")
 	flag.Parse()
 
 	if *showVersion {
 		printVersionAndExit()
 	}
+
+	flags.noEscape = *noEscape
 
 	args := flag.Args()
 

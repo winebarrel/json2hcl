@@ -11,7 +11,34 @@ import (
 	"github.com/zclconf/go-cty/cty"
 )
 
-func Unmarshal(b []byte) ([]byte, error) {
+// Option configures Unmarshal and its variants.
+type Option func(*options)
+
+type options struct {
+	escapeTemplates bool
+}
+
+func defaultOptions() options {
+	return options{escapeTemplates: true}
+}
+
+// NoEscape disables escaping of ${...} and %{...} template sequences, emitting
+// the literal characters instead of $${...} / %%{...}. Note this makes those
+// sequences behave as HCL template interpolations/directives rather than
+// literal text.
+func NoEscape() Option {
+	return func(o *options) {
+		o.escapeTemplates = false
+	}
+}
+
+func Unmarshal(b []byte, opts ...Option) ([]byte, error) {
+	o := defaultOptions()
+
+	for _, fn := range opts {
+		fn(&o)
+	}
+
 	dec := json.NewDecoder(bytes.NewReader(b))
 	dec.UseNumber()
 
@@ -30,11 +57,20 @@ func Unmarshal(b []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	return bytes.TrimSpace(hclwrite.Format(toks.Bytes())), nil
+	out := bytes.TrimSpace(hclwrite.Format(toks.Bytes()))
+
+	if !o.escapeTemplates {
+		// Undo template-sequence escaping after formatting, so hclwrite.Format
+		// still sees canonical (escaped) input and can't mangle stray '${'.
+		out = bytes.ReplaceAll(out, []byte("$${"), []byte("${"))
+		out = bytes.ReplaceAll(out, []byte("%%{"), []byte("%{"))
+	}
+
+	return out, nil
 }
 
-func UnmarshalString(s string) (string, error) {
-	bs, err := Unmarshal([]byte(s))
+func UnmarshalString(s string, opts ...Option) (string, error) {
+	bs, err := Unmarshal([]byte(s), opts...)
 
 	if err != nil {
 		return "", err
@@ -43,14 +79,14 @@ func UnmarshalString(s string) (string, error) {
 	return string(bs), nil
 }
 
-func UnmarshalFrom(r io.Reader) ([]byte, error) {
+func UnmarshalFrom(r io.Reader, opts ...Option) ([]byte, error) {
 	b, err := io.ReadAll(r)
 
 	if err != nil {
 		return nil, err
 	}
 
-	return Unmarshal(b)
+	return Unmarshal(b, opts...)
 }
 
 // decodeValue reads the next JSON value from dec and converts it into HCL
