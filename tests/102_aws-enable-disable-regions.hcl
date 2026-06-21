@@ -1,19 +1,19 @@
 {
+  Version = "2012-10-17"
   Statement = [{
-    Action = ["account:EnableRegion", "account:DisableRegion"]
+    Sid      = "EnableDisableHongKong"
+    Effect   = "Allow"
+    Action   = ["account:EnableRegion", "account:DisableRegion"]
+    Resource = "*"
     Condition = {
       StringEquals = {
         "account:TargetRegion" = "ap-east-1"
       }
     }
-    Effect   = "Allow"
-    Resource = "*"
-    Sid      = "EnableDisableHongKong"
     }, {
-    Action   = ["account:ListRegions"]
-    Effect   = "Allow"
-    Resource = "*"
     Sid      = "ViewConsole"
+    Effect   = "Allow"
+    Action   = ["account:ListRegions"]
+    Resource = "*"
   }]
-  Version = "2012-10-17"
 }

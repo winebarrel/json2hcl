@@ -1,6 +1,9 @@
 {
+  Version = "2012-10-17"
   Statement = [{
-    Action = "service-prefix:action-name"
+    Effect   = "Allow"
+    Action   = "service-prefix:action-name"
+    Resource = "*"
     Condition = {
       DateGreaterThan = {
         "aws:CurrentTime" = "2020-04-01T00:00:00Z"
@@ -9,8 +12,5 @@
         "aws:CurrentTime" = "2020-06-30T23:59:59Z"
       }
     }
-    Effect   = "Allow"
-    Resource = "*"
   }]
-  Version = "2012-10-17"
 }
