@@ -1,8 +1,12 @@
 {
   Version = "2012-10-17"
   Statement = {
-    Effect   = "Allow"
-    Action   = ["service-prefix-1:*", "service-prefix-2:action-name-a", "service-prefix-2:action-name-b"]
+    Effect = "Allow"
+    Action = [
+      "service-prefix-1:*",
+      "service-prefix-2:action-name-a",
+      "service-prefix-2:action-name-b",
+    ]
     Resource = "*"
     Condition = {
       Bool = {

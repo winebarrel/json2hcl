@@ -30,7 +30,7 @@ func Unmarshal(b []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	return toks.Bytes(), nil
+	return bytes.TrimSpace(hclwrite.Format(toks.Bytes())), nil
 }
 
 func UnmarshalString(s string) (string, error) {
@@ -126,7 +126,33 @@ func decodeArray(dec *json.Decoder) (hclwrite.Tokens, error) {
 		return nil, err
 	}
 
-	return hclwrite.TokensForTuple(elems), nil
+	return tupleTokens(elems), nil
+}
+
+// tupleTokens builds an HCL tuple expression. A non-empty tuple is laid out
+// with one element per line so that hclwrite.Format can indent it into a
+// readable multi-line block, instead of the default single-line form.
+func tupleTokens(elems []hclwrite.Tokens) hclwrite.Tokens {
+	if len(elems) == 0 {
+		return hclwrite.TokensForTuple(elems)
+	}
+
+	toks := hclwrite.Tokens{
+		{Type: hclsyntax.TokenOBrack, Bytes: []byte{'['}},
+		{Type: hclsyntax.TokenNewline, Bytes: []byte{'\n'}},
+	}
+
+	for _, elem := range elems {
+		toks = append(toks, elem...)
+		toks = append(toks,
+			&hclwrite.Token{Type: hclsyntax.TokenComma, Bytes: []byte{','}},
+			&hclwrite.Token{Type: hclsyntax.TokenNewline, Bytes: []byte{'\n'}},
+		)
+	}
+
+	toks = append(toks, &hclwrite.Token{Type: hclsyntax.TokenCBrack, Bytes: []byte{']'}})
+
+	return toks
 }
 
 func scalarTokens(tok json.Token) (hclwrite.Tokens, error) {

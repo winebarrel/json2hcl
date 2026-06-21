@@ -1,14 +1,20 @@
 {
   Version = "2012-10-17"
-  Statement = [{
-    Sid      = "ViewAccountPasswordRequirements"
-    Effect   = "Allow"
-    Action   = "iam:GetAccountPasswordPolicy"
-    Resource = "*"
-    }, {
-    Sid      = "ChangeOwnPassword"
-    Effect   = "Allow"
-    Action   = ["iam:GetUser", "iam:ChangePassword"]
-    Resource = "arn:aws:iam::*:user/$${aws:username}"
-  }]
+  Statement = [
+    {
+      Sid      = "ViewAccountPasswordRequirements"
+      Effect   = "Allow"
+      Action   = "iam:GetAccountPasswordPolicy"
+      Resource = "*"
+    },
+    {
+      Sid    = "ChangeOwnPassword"
+      Effect = "Allow"
+      Action = [
+        "iam:GetUser",
+        "iam:ChangePassword",
+      ]
+      Resource = "arn:aws:iam::*:user/$${aws:username}"
+    },
+  ]
 }

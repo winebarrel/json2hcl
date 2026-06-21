@@ -1,4 +1,7 @@
 {
   foo = null
-  bar = [null, 1]
+  bar = [
+    null,
+    1,
+  ]
 }
