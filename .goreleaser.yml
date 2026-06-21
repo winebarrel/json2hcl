@@ -1,3 +1,4 @@
+version: 2
 before:
   hooks:
     - go mod tidy
@@ -12,7 +13,7 @@ checksum:
 archives:
   - format_overrides:
       - goos: windows
-        format: zip
+        formats: [zip]
 brews:
   - repository:
       owner: winebarrel
