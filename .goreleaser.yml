@@ -1,3 +1,4 @@
+version: 2
 before:
   hooks:
     - go mod tidy
@@ -12,13 +13,17 @@ checksum:
 archives:
   - format_overrides:
       - goos: windows
-        format: zip
-brews:
+        formats: [zip]
+homebrew_casks:
   - repository:
       owner: winebarrel
       name: homebrew-json2hcl
     homepage: https://github.com/winebarrel/json2hcl
     description: A tool to convert JSON to HCL.
     license: MIT
-    install: |
-      bin.install 'json2hcl'
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/json2hcl"]
+          end
