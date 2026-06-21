@@ -21,6 +21,15 @@ func Unmarshal(b []byte) ([]byte, error) {
 		return nil, err
 	}
 
+	// reject trailing data after the first JSON value
+	if _, err := dec.Token(); err != io.EOF {
+		if err == nil {
+			err = fmt.Errorf("unexpected trailing data after JSON value")
+		}
+
+		return nil, err
+	}
+
 	return toks.Bytes(), nil
 }
 

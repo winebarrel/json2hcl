@@ -14,15 +14,17 @@ func TestUnmarshalError(t *testing.T) {
 	assert := assert.New(t)
 
 	tests := map[string]string{
-		"empty input":                "",
-		"unterminated object":        "{",
-		"unterminated array":         "[",
-		"non-string object key":      "{1:2}",
-		"missing object value":       `{"a":}`,
-		"invalid array element":      "[}",
-		"bad array element literal":  "[tru",
-		"object missing close brace": `{"a":1`,
-		"array missing close brack":  "[1",
+		"empty input":                 "",
+		"unterminated object":         "{",
+		"unterminated array":          "[",
+		"non-string object key":       "{1:2}",
+		"missing object value":        `{"a":}`,
+		"invalid array element":       "[}",
+		"bad array element literal":   "[tru",
+		"object missing close brace":  `{"a":1`,
+		"array missing close bracket": "[1",
+		"trailing object":             "{}{}",
+		"trailing garbage":            "{}@",
 	}
 
 	for name, in := range tests {
