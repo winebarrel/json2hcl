@@ -14,4 +14,10 @@ jobs:
           go-version-file: go.mod
           cache: false # https://github.com/golangci/golangci-lint-action/issues/807
       - uses: golangci/golangci-lint-action@v9
-      - run: make
+      - run: make vet
+      - run: make cover
+      - run: make build
+      - uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.txt

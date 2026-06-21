@@ -17,6 +17,10 @@ lint:
 test:
 	go test -v -count=1 ./...
 
+.PHONY: cover
+cover:
+	go test -v -count=1 -coverprofile=coverage.txt -covermode=atomic ./...
+
 .PHONY: clean
 clean:
 	rm -f json2hcl json2hcl.exe
