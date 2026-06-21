@@ -21,3 +21,9 @@ homebrew_casks:
     homepage: https://github.com/winebarrel/json2hcl
     description: A tool to convert JSON to HCL.
     license: MIT
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/json2hcl"]
+          end
