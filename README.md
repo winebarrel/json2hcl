@@ -1,6 +1,7 @@
 # json2hcl
 
 [![CI](https://github.com/winebarrel/json2hcl/actions/workflows/ci.yml/badge.svg)](https://github.com/winebarrel/json2hcl/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/winebarrel/json2hcl/graph/badge.svg?token=DMI0AG4U48)](https://codecov.io/gh/winebarrel/json2hcl)
 
 A tool to convert JSON to HCL.
 
@@ -58,3 +59,7 @@ $ json2hcl policy.json # or `cat policy.json | json2hcl`
   ]
 }
 ```
+
+## Related tools
+
+- https://github.com/winebarrel/tfjson2hcl
